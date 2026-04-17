@@ -102,6 +102,21 @@ class SettingsManager {
         Self.displayString(keyCode: freeHandKeyCode, carbonModifiers: freeHandModifiers)
     }
 
+    // MARK: - Translation Language
+
+    static let availableLanguages: [String] = [
+        "Englisch", "Deutsch", "Französisch", "Spanisch", "Italienisch",
+        "Portugiesisch", "Niederländisch", "Polnisch", "Russisch",
+        "Chinesisch (Mandarin)", "Japanisch", "Koreanisch",
+        "Arabisch", "Türkisch", "Schwedisch", "Dänisch",
+        "Norwegisch", "Finnisch", "Griechisch"
+    ]
+
+    var translationLanguage: String {
+        get { defaults.string(forKey: "translation_language") ?? "Englisch" }
+        set { defaults.set(newValue, forKey: "translation_language") }
+    }
+
     // MARK: - Display Helpers
 
     static func displayString(keyCode: UInt32, carbonModifiers: UInt32) -> String {
