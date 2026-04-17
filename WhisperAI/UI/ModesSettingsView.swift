@@ -9,6 +9,12 @@ struct ModesSettingsView: View {
     @State private var editName   = ""
     @State private var editPrompt = ""
     @State private var savedFeedback = false
+    @State private var selectedLanguage = SettingsManager.shared.translationLanguage
+
+    /// Zeigt den Sprach-Picker wenn der aktuelle Prompt den {language}-Platzhalter enthält.
+    private var hasLanguagePlaceholder: Bool {
+        editPrompt.contains("{language}")
+    }
 
     private var selectedMode: Mode? {
         guard let id = selectedModeId else { return nil }
@@ -81,6 +87,22 @@ struct ModesSettingsView: View {
                         TextField("Modus-Name", text: $editName)
                             .textFieldStyle(.plain)
                     }
+
+                    if hasLanguagePlaceholder {
+                        Section {
+                            Picker("Zielsprache", selection: $selectedLanguage) {
+                                ForEach(SettingsManager.availableLanguages, id: \.self) { lang in
+                                    Text(lang).tag(lang)
+                                }
+                            }
+                        } header: {
+                            Text("Übersetzung")
+                        } footer: {
+                            Text("Der Platzhalter {language} im Prompt wird durch diese Sprache ersetzt.")
+                                .font(.caption)
+                        }
+                    }
+
                     Section("Prompt") {
                         TextEditor(text: $editPrompt)
                             .font(.system(.body))
@@ -130,8 +152,9 @@ struct ModesSettingsView: View {
 
     private func loadSelectedMode() {
         guard let mode = selectedMode else { return }
-        editName   = mode.name
-        editPrompt = mode.prompt
+        editName       = mode.name
+        editPrompt     = mode.prompt
+        selectedLanguage = SettingsManager.shared.translationLanguage
     }
 
     private func addMode() {
@@ -168,6 +191,12 @@ struct ModesSettingsView: View {
         updated.prompt = trimPrompt
         ModeManager.shared.updateMode(updated)
         model.refreshModes()
+
+        // Sprach-Einstellung speichern wenn dieser Modus {language} verwendet.
+        if trimPrompt.contains("{language}") {
+            SettingsManager.shared.translationLanguage = selectedLanguage
+        }
+
         NotificationCenter.default.post(name: .settingsChanged, object: nil)
 
         savedFeedback = true

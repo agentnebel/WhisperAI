@@ -17,11 +17,21 @@ class LLMService {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 30
 
+        // {language}-Platzhalter durch die in den Einstellungen gewählte Sprache ersetzen.
+        // Ermöglicht dynamische Übersetzungsmodi ohne hart kodierte Sprache im Prompt.
+        let resolvedPrompt = systemPrompt.replacingOccurrences(
+            of: "{language}",
+            with: SettingsManager.shared.translationLanguage
+        )
+
+        // Das Transkript wird in <transcript>-Tags eingebettet, damit das Modell
+        // Nutzerdaten klar vom System-Prompt trennt und Inhalte nicht als
+        // Anweisungen interpretiert (verhindert, dass Fragen beantwortet werden).
         let payload: [String: Any] = [
             "model": model,
             "messages": [
-                ["role": "system", "content": systemPrompt],
-                ["role": "user", "content": transcript]
+                ["role": "system", "content": resolvedPrompt],
+                ["role": "user", "content": "<transcript>\n\(transcript)\n</transcript>"]
             ],
             "temperature": 0.3
         ]
