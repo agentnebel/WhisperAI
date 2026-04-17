@@ -9,9 +9,14 @@ class TextInserter {
         // Snapshot previous clipboard (string only — restoring arbitrary types is unreliable)
         let previousClipboard = pasteboard.string(forType: .string)
 
+        let snapshotCount = pasteboard.changeCount
+
         pasteboard.clearContents()
         pasteboard.setString(text, forType: .string)
         NSLog("WhisperAI: Text in Zwischenablage kopiert (%d Zeichen)", text.count)
+
+        // Nach unserem Set: changeCount ist jetzt snapshotCount + 1
+        let ourCount = pasteboard.changeCount
 
         guard AXIsProcessTrusted() else {
             NSLog("WhisperAI: Keine Accessibility-Berechtigung")
@@ -24,10 +29,14 @@ class TextInserter {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             simulatePaste()
 
+            // Dynamisches Restore-Delay: skaliert mit Textlänge
+            let restoreDelay = max(0.6, min(2.0, 0.6 + Double(text.count) / 20_000))
+
             // Restore previous clipboard content after paste completes.
-            // Only restore if our inserted text is still there (user may have copied something new).
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                guard pasteboard.string(forType: .string) == text else { return }
+            // Nur restoren wenn Clipboard noch unser Text ist UND Nutzer
+            // in der Zwischenzeit nichts Neues kopiert hat.
+            DispatchQueue.main.asyncAfter(deadline: .now() + restoreDelay) {
+                guard pasteboard.changeCount == ourCount else { return }
                 pasteboard.clearContents()
                 if let prev = previousClipboard {
                     pasteboard.setString(prev, forType: .string)
