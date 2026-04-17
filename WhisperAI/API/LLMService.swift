@@ -17,11 +17,14 @@ class LLMService {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 30
 
+        // Das Transkript wird in <transcript>-Tags eingebettet, damit das Modell
+        // Nutzerdaten klar vom System-Prompt trennt und Inhalte nicht als
+        // Anweisungen interpretiert (verhindert, dass Fragen beantwortet werden).
         let payload: [String: Any] = [
             "model": model,
             "messages": [
                 ["role": "system", "content": systemPrompt],
-                ["role": "user", "content": transcript]
+                ["role": "user", "content": "<transcript>\n\(transcript)\n</transcript>"]
             ],
             "temperature": 0.3
         ]
