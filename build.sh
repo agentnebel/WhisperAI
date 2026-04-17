@@ -64,10 +64,19 @@ cp "${PROJECT_DIR}/WhisperAI/AppIcon.icns" "${RESOURCES}/AppIcon.icns"
 # Remove resource forks/extended attributes that break codesign
 xattr -cr "${APP_BUNDLE}"
 
-# Ad-hoc code signing — binds Accessibility trust to a stable identity
-# (without this, every new build = new binary hash = macOS revokes trust)
-codesign --force --sign - --entitlements "${PROJECT_DIR}/WhisperAI/WhisperAI.entitlements" "${APP_BUNDLE}"
-echo "✓ Code-signiert (ad-hoc)"
+# Code-Signierung mit stabilem lokalen Zertifikat.
+# "WhisperAI Dev" ist ein einmalig erzeugtes selbst-signiertes Zertifikat im
+# Login-Keychain — dadurch bleibt die Signatur über alle Builds hinweg gleich
+# und macOS muss Keychain-Zugriff (und Accessibility) nur einmal genehmigen.
+# Fallback auf Ad-hoc (-), falls das Zertifikat nicht gefunden wird.
+if security find-identity -v -p codesigning | grep -q "WhisperAI Dev"; then
+    SIGN_ID="WhisperAI Dev"
+else
+    SIGN_ID="-"
+    echo "⚠️  Zertifikat 'WhisperAI Dev' nicht gefunden — Ad-hoc-Signierung wird verwendet."
+fi
+codesign --force --sign "${SIGN_ID}" --entitlements "${PROJECT_DIR}/WhisperAI/WhisperAI.entitlements" "${APP_BUNDLE}"
+echo "✓ Code-signiert (${SIGN_ID})"
 
 # Refresh Launch Services + Dock icon cache so the new bundle is recognized
 # immediately (avoids stale hash → "app is damaged" and missing icons).

@@ -32,6 +32,7 @@ struct MenuBarPopoverView: View {
                 .padding(.vertical, 6)
         }
         .frame(width: 290)
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     // MARK: - Header
@@ -89,21 +90,15 @@ struct MenuBarPopoverView: View {
     // MARK: - Mode Section
 
     private var modeSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 6) {
             Text("Modus")
                 .font(.caption.weight(.semibold))
                 .foregroundColor(.secondary)
                 .textCase(.uppercase)
 
-            modePillRow
-        }
-    }
-
-    private var modePillRow: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 6) {
+            VStack(spacing: 2) {
                 ForEach(model.modes) { mode in
-                    ModePillButton(
+                    ModeRowButton(
                         mode: mode,
                         isActive: mode.id == model.activeMode.id
                     ) {
@@ -148,27 +143,43 @@ struct MenuBarPopoverView: View {
     }
 }
 
-// MARK: - Mode Pill Button
+// MARK: - Mode Row Button
 
-private struct ModePillButton: View {
+private struct ModeRowButton: View {
     let mode: Mode
     let isActive: Bool
     let action: () -> Void
 
+    @State private var isHovered = false
+
     var body: some View {
         Button(action: action) {
-            Text(mode.name)
-                .font(.callout)
-                .fontWeight(isActive ? .semibold : .regular)
-                .foregroundColor(isActive ? .white : .primary)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(isActive ? Color.accentColor : Color(.controlBackgroundColor))
-                )
+            HStack(spacing: 8) {
+                // Aktiv-Indikator
+                Image(systemName: isActive ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 13, weight: isActive ? .medium : .regular))
+                    .foregroundColor(isActive ? .accentColor : Color(.tertiaryLabelColor))
+                    .frame(width: 16)
+
+                Text(mode.name)
+                    .font(.callout)
+                    .fontWeight(isActive ? .semibold : .regular)
+                    .foregroundColor(isActive ? .primary : .primary)
+
+                Spacer()
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
+            .background(
+                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    .fill(isActive
+                          ? Color.accentColor.opacity(0.12)
+                          : isHovered ? Color(.selectedContentBackgroundColor).opacity(0.12) : Color.clear)
+            )
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .onHover { isHovered = $0 }
     }
 }
 

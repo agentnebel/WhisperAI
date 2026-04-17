@@ -11,7 +11,8 @@ Der Text wird automatisch in das aktive Fenster eingefügt.
 ## ✨ Features
 
 - **🌍 Mehrsprachig**: Transkription funktioniert mit Deutsch, Englisch, Französisch und mehr
-- **🎯 Zwei Modi**: 
+- **🎯 Drei Modi** (anpassbar):
+  - **Übersetzen**: Übersetzt Transkripte in eine frei wählbare Zielsprache
   - **Standard**: Transkript wird grammatikalisch verbessert, Struktur optimiert
   - **Freundlich**: Aggressiver Text wird sachlich und respektvoll umformuliert
 - **🔐 Sicher**: API-Keys werden in der macOS Keychain gespeichert, nicht in Plaintext
@@ -132,6 +133,17 @@ Beispiel-Prompts:
 - _„Zusammenfassung der wichtigsten Punkte"_
 - _„Übersetze ins Englische"_
 
+### Übersetzen-Modus: Zielsprache wählen
+
+Der eingebaute **Übersetzen**-Modus unterstützt 19 Sprachen (Englisch, Französisch, Spanisch, Italienisch, Portugiesisch, Niederländisch, Polnisch, Russisch, Chinesisch, Japanisch, Koreanisch, Arabisch, Türkisch, Schwedisch, Norwegisch, Dänisch, Finnisch, Griechisch, Tschechisch).
+
+1. Menu-Bar → **„Einstellungen…"** → Reiter **„Modus"**
+2. Modus **„Übersetzen"** auswählen
+3. Unter **„Zielsprache"** die gewünschte Sprache wählen
+4. **„Speichern"**
+
+Eigene Modi mit dem Platzhalter `{language}` im Prompt werden ebenfalls durch die gewählte Sprache ersetzt.
+
 ### Einstellungen (Dateiort)
 
 Deine Konfiguration wird lokal gespeichert:
@@ -228,6 +240,62 @@ WhisperAI/
 - **Keine Cloud-Sync**: Modi und Einstellungen bleiben auf deinem Mac
 - **Entfernt nach Verarbeitung**: Audiodateien werden nach der Transkription sofort gelöscht
 - **Offline-Betrieb nicht möglich**: Erfordert aktive Internet-Verbindung zu OpenAI-APIs
+
+## 📋 Changelog
+
+### v1.3.0 — 2026-04-17
+**Stabiles Code-Signing (kein Keychain-Spam mehr)**
+- Selbst-signiertes lokales Zertifikat „WhisperAI Dev" ersetzt Ad-hoc-Signierung (`--sign -`)
+- Zuvor: Jeder Build erzeugte eine neue, zufällige Signatur → macOS fragte bei jedem Start erneut nach Keychain-Zugriff
+- Jetzt: Signatur bleibt über alle Builds hinweg gleich → einmalige „Immer erlauben"-Genehmigung reicht dauerhaft
+- `build.sh` wechselt automatisch auf Ad-hoc-Fallback, falls das Zertifikat nicht gefunden wird
+
+**Popover-Größe korrigiert**
+- `NSHostingController.sizingOptions = [.preferredContentSize]` (macOS 13+) hinzugefügt
+- Bisher: NSPopover ignorierte die SwiftUI-Intrinsicsize und schnitt den Inhalt oben ab (Modus-Bereich war nicht sichtbar)
+- Jetzt: Popover passt sich automatisch an die tatsächliche Höhe des SwiftUI-Inhalts an
+
+**Modus-Auswahl im Popover neu gestaltet**
+- Horizontale Pill-Buttons durch vertikale Zeilen mit Checkmark-Indikator ersetzt
+- Löst das Overflow-Problem bei vier oder mehr Modi (Buttons liefen früher aus dem sichtbaren Bereich)
+- Hover-Effekt und farbige Hintergrundmarkierung für den aktiven Modus
+
+---
+
+### v1.2.0 — 2026-04-15
+**Übersetzen-Modus**
+- Neuer eingebauter Modus „Übersetzen" mit konfigurierbarer Zielsprache
+- Zielsprache wählbar in Einstellungen → Modus (19 Sprachen verfügbar)
+- Prompt-Platzhalter `{language}` wird zur Laufzeit durch die gewählte Sprache ersetzt
+- Automatische Migration: Bestehende Installationen erhalten den neuen Modus ohne Datenverlust
+
+**Migrations-Engine erweitert**
+- Zweistufige Migration beim App-Start: (1) veraltete Prompts upgraden, (2) fehlende Default-Modi ergänzen
+- Neue Defaults erscheinen bei Update automatisch in der Modus-Liste bestehender Nutzer
+
+---
+
+### v1.1.0 — 2026-04-14
+**LLM beantwortet keine Fragen mehr**
+- Gehärtete System-Prompts für alle Default-Modi mit klaren STRENG-VERBOTEN/NUR-ERLAUBT-Abschnitten
+- Transkript wird in `<transcript>`-Tags eingebettet, damit das Modell Nutzerdaten von Anweisungen trennt
+- Verhindert, dass transkribierte Fragen (z.B. „Was ist die Hauptstadt von Frankreich?") direkt beantwortet werden
+- Konkrete Gegenbeispiele in den Prompts demonstrieren korrektes Verhalten
+
+---
+
+### v1.0.0 — 2026-04-13
+**Erstveröffentlichung**
+- Hold-to-Speak & FreeHand-Hotkeys (global, Carbon HIToolbox)
+- OpenAI Whisper-Transkription
+- GPT-4o mini Nachbearbeitung mit konfigurierbaren Modi
+- Keychain-Speicherung des API-Keys
+- HUD-Overlay mit transparenten Ecken
+- Bedienungshilfen-Onboarding
+- Autostart via SMAppService (kein Login-Items-Eintrag mehr nötig)
+- Einstellungen: Hotkeys, Modelle, API-Key, Modi-Editor
+
+---
 
 ## 📜 Lizenz
 

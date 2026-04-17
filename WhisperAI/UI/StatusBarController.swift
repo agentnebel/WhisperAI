@@ -41,10 +41,17 @@ class StatusBarController: NSObject {
 
     private func setupPopover() {
         popover = NSPopover()
-        popover.contentSize = NSSize(width: 290, height: 320)
+        popover.contentSize = NSSize(width: 290, height: 400) // wird von sizingOptions überschrieben
         popover.behavior    = .applicationDefined  // we control close manually
         popover.animates    = true
-        popover.contentViewController = NSHostingController(rootView: MenuBarPopoverView())
+
+        // Wichtig: NSHostingController muss die SwiftUI-Intrinsicsize ans NSPopover
+        // weitergeben, sonst bleibt contentSize fix und der Inhalt wird abgeschnitten.
+        let hosting = NSHostingController(rootView: MenuBarPopoverView())
+        if #available(macOS 13.0, *) {
+            hosting.sizingOptions = [.preferredContentSize]
+        }
+        popover.contentViewController = hosting
 
         guard let button = statusItem.button else { return }
         button.action = #selector(togglePopover(_:))

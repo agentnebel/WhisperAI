@@ -25,14 +25,25 @@ class ModeManager {
                 let data = try Data(contentsOf: storageURL)
                 let saved = try JSONDecoder().decode([Mode].self, from: data)
                 if !saved.isEmpty {
-                    // Migration: Upgrade alte Default-Prompts auf die neuen,
-                    // die strikt verbieten, Inhalte zu beantworten.
+                    // Migration 1: Alte Default-Prompts auf gehärtete Versionen upgraden.
                     let (migrated, didMigrate) = Self.migrateLegacyDefaults(in: saved)
-                    modes = migrated
                     if didMigrate {
                         NSLog("WhisperAI: Default-Modi-Prompts auf neue Version aktualisiert")
                         needsSave = true
                     }
+
+                    // Migration 2: Fehlende Default-Modi am Ende der Liste ergänzen.
+                    // So werden neue Defaults (z.B. "Übersetzen") bei bestehenden
+                    // Installationen automatisch hinzugefügt.
+                    let existingNames = Set(migrated.map { $0.name })
+                    let missing = Self.defaultModes.filter { !existingNames.contains($0.name) }
+                    if !missing.isEmpty {
+                        NSLog("WhisperAI: %d fehlende Default-Modi ergänzt: %@",
+                              missing.count,
+                              missing.map { $0.name }.joined(separator: ", "))
+                        needsSave = true
+                    }
+                    modes = migrated + missing
                 } else {
                     NSLog("WhisperAI: Gespeicherte Modi-Liste leer — Defaults werden verwendet")
                     modes = Self.defaultModes
