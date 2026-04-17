@@ -9,14 +9,12 @@ class TextInserter {
         // Snapshot previous clipboard (string only — restoring arbitrary types is unreliable)
         let previousClipboard = pasteboard.string(forType: .string)
 
-        let snapshotCount = pasteboard.changeCount
-
         pasteboard.clearContents()
         pasteboard.setString(text, forType: .string)
+        // Nach unserem setString ist changeCount inkrementiert — diesen Wert merken,
+        // um später zu erkennen ob der Nutzer zwischenzeitlich selbst etwas kopiert hat.
+        let ourChangeCount = pasteboard.changeCount
         NSLog("WhisperAI: Text in Zwischenablage kopiert (%d Zeichen)", text.count)
-
-        // Nach unserem Set: changeCount ist jetzt snapshotCount + 1
-        let ourCount = pasteboard.changeCount
 
         guard AXIsProcessTrusted() else {
             NSLog("WhisperAI: Keine Accessibility-Berechtigung")
@@ -29,14 +27,22 @@ class TextInserter {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             simulatePaste()
 
-            // Dynamisches Restore-Delay: skaliert mit Textlänge
+            // Restore previous clipboard content after paste completes.
+            //
+            // Das Delay skaliert mit der Textlänge: kurze Texte sind sofort gelesen,
+            // lange Texte brauchen auf stark ausgelasteten Macs oder in Apps mit
+            // asynchronem Paste-Handling (Electron, Office) länger. Bei 2s gedeckelt,
+            // damit der Nutzer nicht ewig auf sein altes Clipboard warten muss.
             let restoreDelay = max(0.6, min(2.0, 0.6 + Double(text.count) / 20_000))
 
-            // Restore previous clipboard content after paste completes.
-            // Nur restoren wenn Clipboard noch unser Text ist UND Nutzer
-            // in der Zwischenzeit nichts Neues kopiert hat.
             DispatchQueue.main.asyncAfter(deadline: .now() + restoreDelay) {
-                guard pasteboard.changeCount == ourCount else { return }
+                // Wenn der changeCount seit unserem Set nicht mehr unser Wert ist,
+                // hat jemand anderes (Nutzer, andere App) ins Clipboard geschrieben.
+                // Dann dessen Inhalt nicht überschreiben.
+                guard pasteboard.changeCount == ourChangeCount else {
+                    NSLog("WhisperAI: Clipboard inzwischen geändert — kein Restore")
+                    return
+                }
                 pasteboard.clearContents()
                 if let prev = previousClipboard {
                     pasteboard.setString(prev, forType: .string)

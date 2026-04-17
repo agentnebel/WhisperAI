@@ -246,6 +246,15 @@ WhisperAI/
 
 ## 📋 Changelog
 
+### v1.4.1 — 2026-04-17
+**Clipboard-Restore robuster**
+- `TextInserter`: Restore-Delay skaliert jetzt mit Textlänge (0.6s – 2.0s statt fix 0.6s)
+- Verhindert abgeschnittenes Clipboard-Restore bei sehr langen Texten auf ausgelasteten Macs oder in Apps mit asynchronem Paste-Handling (Electron, Office)
+- `NSPasteboard.changeCount`-Watch statt String-Vergleich: erkennt zuverlässig, wenn der Nutzer während des Warte-Fensters selbst etwas kopiert — dann wird der Restore übersprungen
+- Code-Cleanup: totes `snapshotCount`-Property entfernt, Skip-Fall wird geloggt
+
+---
+
 ### v1.4.0 — 2026-04-17
 **Aufnahme-Overlay (RecordingHUD)**
 - Neues kreisförmiges Mikrofon-Overlay erscheint beim Start einer Aufnahme zentriert auf dem Desktop
