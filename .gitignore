@@ -1,0 +1,28 @@
+# Build artifacts
+/build/
+*.swiftc
+*.dSYM
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*~
+
+# Xcode (if ever used)
+xcuserdata/
+*.xcworkspace/
+
+# User-specific data (never commit!)
+~/Library/Preferences/com.whisperai.app.plist
+~/Library/Application\ Support/WhisperAI/
+
+# IDE
+.vscode/
+.idea/
+*.swiftpm
+
+# Temporary files
+*.tmp
+*.log

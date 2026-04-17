@@ -1,0 +1,336 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BB0000000000000000000001 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000001 /* main.swift */; };
+		BB0000000000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000002 /* AppDelegate.swift */; };
+		BB0000000000000000000003 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000003 /* AppState.swift */; };
+		BB0000000000000000000004 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000004 /* AudioRecorder.swift */; };
+		BB0000000000000000000005 /* WhisperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000005 /* WhisperService.swift */; };
+		BB0000000000000000000006 /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000006 /* LLMService.swift */; };
+		BB0000000000000000000007 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000007 /* Mode.swift */; };
+		BB0000000000000000000008 /* ModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000008 /* ModeManager.swift */; };
+		BB0000000000000000000009 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000009 /* StatusBarController.swift */; };
+		BB000000000000000000000A /* TextInserter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000000000A /* TextInserter.swift */; };
+		BB000000000000000000000B /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000000000B /* HotkeyManager.swift */; };
+		BB000000000000000000000C /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000000000000000000F /* SettingsManager.swift */; };
+		BB000000000000000000000D /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000010 /* SettingsWindowController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AA0000000000000000000001 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		AA0000000000000000000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AA0000000000000000000003 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		AA0000000000000000000004 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		AA0000000000000000000005 /* WhisperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperService.swift; sourceTree = "<group>"; };
+		AA0000000000000000000006 /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
+		AA0000000000000000000007 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
+		AA0000000000000000000008 /* ModeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeManager.swift; sourceTree = "<group>"; };
+		AA0000000000000000000009 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
+		AA000000000000000000000A /* TextInserter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInserter.swift; sourceTree = "<group>"; };
+		AA000000000000000000000B /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
+		AA000000000000000000000C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA000000000000000000000D /* WhisperAI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhisperAI.entitlements; sourceTree = "<group>"; };
+		AA000000000000000000000E /* WhisperAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhisperAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA000000000000000000000F /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		AA0000000000000000000010 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		CC0000000000000000000001 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				CC0000000000000000000002 /* WhisperAI */,
+				CC0000000000000000000008 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000002 /* WhisperAI */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000001 /* main.swift */,
+				AA0000000000000000000002 /* AppDelegate.swift */,
+				AA0000000000000000000003 /* AppState.swift */,
+				CC0000000000000000000003 /* Audio */,
+				CC0000000000000000000004 /* API */,
+				CC0000000000000000000005 /* Modes */,
+				CC0000000000000000000007 /* UI */,
+				CC0000000000000000000006 /* Services */,
+				AA000000000000000000000C /* Info.plist */,
+				AA000000000000000000000D /* WhisperAI.entitlements */,
+			);
+			path = WhisperAI;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000003 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000004 /* AudioRecorder.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000004 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000005 /* WhisperService.swift */,
+				AA0000000000000000000006 /* LLMService.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000005 /* Modes */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000007 /* Mode.swift */,
+				AA0000000000000000000008 /* ModeManager.swift */,
+			);
+			path = Modes;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000006 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AA000000000000000000000A /* TextInserter.swift */,
+				AA000000000000000000000B /* HotkeyManager.swift */,
+				AA000000000000000000000F /* SettingsManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000007 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000009 /* StatusBarController.swift */,
+				AA0000000000000000000010 /* SettingsWindowController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		CC0000000000000000000008 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA000000000000000000000E /* WhisperAI.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DD0000000000000000000002 /* WhisperAI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD0000000000000000000009 /* Build configuration list for PBXNativeTarget "WhisperAI" */;
+			buildPhases = (
+				DD0000000000000000000003 /* Sources */,
+				DD0000000000000000000004 /* Frameworks */,
+				DD0000000000000000000005 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WhisperAI;
+			productName = WhisperAI;
+			productReference = AA000000000000000000000E /* WhisperAI.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DD0000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = DD0000000000000000000008 /* Build configuration list for PBXProject "WhisperAI" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = de;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				de,
+				Base,
+			);
+			mainGroup = CC0000000000000000000001 /* Root */;
+			productRefGroup = CC0000000000000000000008 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DD0000000000000000000002 /* WhisperAI */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DD0000000000000000000005 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DD0000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB0000000000000000000001 /* main.swift in Sources */,
+				BB0000000000000000000002 /* AppDelegate.swift in Sources */,
+				BB0000000000000000000003 /* AppState.swift in Sources */,
+				BB0000000000000000000004 /* AudioRecorder.swift in Sources */,
+				BB0000000000000000000005 /* WhisperService.swift in Sources */,
+				BB0000000000000000000006 /* LLMService.swift in Sources */,
+				BB0000000000000000000007 /* Mode.swift in Sources */,
+				BB0000000000000000000008 /* ModeManager.swift in Sources */,
+				BB0000000000000000000009 /* StatusBarController.swift in Sources */,
+				BB000000000000000000000A /* TextInserter.swift in Sources */,
+				BB000000000000000000000B /* HotkeyManager.swift in Sources */,
+				BB000000000000000000000C /* SettingsManager.swift in Sources */,
+				BB000000000000000000000D /* SettingsWindowController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DD0000000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DD0000000000000000000006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DD0000000000000000000007 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		DD000000000000000000000A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = WhisperAI/WhisperAI.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = WhisperAI/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.whisperai.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DD000000000000000000000B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = WhisperAI/WhisperAI.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = WhisperAI/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.whisperai.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DD0000000000000000000008 /* Build configuration list for PBXProject "WhisperAI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD0000000000000000000006 /* Debug */,
+				DD0000000000000000000007 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD0000000000000000000009 /* Build configuration list for PBXNativeTarget "WhisperAI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD000000000000000000000A /* Debug */,
+				DD000000000000000000000B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = DD0000000000000000000001 /* Project object */;
+}
