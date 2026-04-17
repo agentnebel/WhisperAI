@@ -146,7 +146,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let sm = SettingsManager.shared
         holdHotkeyManager.reregister(keyCode: sm.holdKeyCode, modifiers: sm.holdModifiers)
         freeHandHotkeyManager.reregister(keyCode: sm.freeHandKeyCode, modifiers: sm.freeHandModifiers)
-        statusBarController.rebuildMenu()
+        statusBarController.refreshModel()
     }
 
     @objc private func onHotkeyDisable() {
@@ -170,6 +170,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         do {
             try audioRecorder.startRecording()
             state = .recording
+            RecordingHUD.shared.show()
             NSLog("WhisperAI: Aufnahme gestartet")
             NSSound.beep()
         } catch {
@@ -181,11 +182,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func stopAndProcess() {
         guard let audioURL = audioRecorder.stopRecording() else {
             NSLog("WhisperAI: Keine Audiodatei vorhanden")
+            RecordingHUD.shared.hide()
             state = .idle
             return
         }
 
         NSLog("WhisperAI: Aufnahme gestoppt, Datei: %@", audioURL.path)
+        RecordingHUD.shared.hide()
         state = .processing
 
         let apiKey = SettingsManager.shared.apiKey

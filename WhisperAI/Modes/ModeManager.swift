@@ -93,9 +93,6 @@ class ModeManager {
     /// migriert werden sollen. Bei jeder Prompt-Änderung hier den alten Wert
     /// ergänzen, damit bestehende Installationen aktualisiert werden.
     private static let legacyPromptsByName: [String: [String]] = [
-        "Übersetzen": [
-            // Platzhalter für zukünftige Prompt-Versionen des Übersetzen-Modus
-        ],
         "Standard": [
             // v1.0.0 Original
             """

@@ -215,21 +215,24 @@ WhisperAI/
 │   │   ├── TextInserter.swift        # Keyboard-Paste (Accessibility)
 │   │   ├── HotkeyManager.swift       # Carbon-Event Global Hotkeys
 │   │   ├── SettingsManager.swift     # UserDefaults + Keychain
-│   │   ├── KeychainHelper.swift      # Secure API Key Storage
+│   │   └── KeychainHelper.swift      # Secure API Key Storage
+│   ├── Modes/
+│   │   ├── Mode.swift                # Mode-Datentyp
 │   │   └── ModeManager.swift         # Custom-Modes (JSON-Persistierung)
 │   ├── UI/
+│   │   ├── WhisperAIModel.swift      # SwiftUI ObservableObject
 │   │   ├── MenuBarPopoverView.swift  # SwiftUI Popover
 │   │   ├── GeneralSettingsView.swift # Hotkey + API Key Settings
 │   │   ├── ModesSettingsView.swift   # Mode Editor
+│   │   ├── SettingsWindowController.swift # Settings-Fenster
 │   │   ├── StatusBarController.swift # NSStatusBar Icon + Popover
 │   │   ├── InsertionHUD.swift        # Toast-Overlay während Verarbeitung
+│   │   ├── RecordingHUD.swift        # Mikrofon-Overlay während Aufnahme
 │   │   └── AccessibilityOnboarding.swift # First-Run Dialogs
-│   ├── Modes/
-│   │   └── ModeManager.swift         # Mode-Persistierung
 │   ├── Info.plist                    # App Metadata
 │   ├── AppIcon.icns                  # App Icon
 │   └── WhisperAI.entitlements        # Code-Signing Entitlements
-├── build.sh                          # Build-Script (swiftc + Ad-hoc Signing)
+├── build.sh                          # Build-Script (swiftc + Code-Signing)
 └── README.md                         # Diese Datei
 ```
 
@@ -242,6 +245,23 @@ WhisperAI/
 - **Offline-Betrieb nicht möglich**: Erfordert aktive Internet-Verbindung zu OpenAI-APIs
 
 ## 📋 Changelog
+
+### v1.4.0 — 2026-04-17
+**Aufnahme-Overlay (RecordingHUD)**
+- Neues kreisförmiges Mikrofon-Overlay erscheint beim Start einer Aufnahme zentriert auf dem Desktop
+- Transparenter Hintergrund (`underWindowBackground`): Desktop bleibt sichtbar
+- Pulsierender Ring zeigt aktive Aufnahme an; Icon-Farbe passt sich dem System-Erscheinungsbild an (hell/dunkel)
+- Verschwindet automatisch wenn die Aufnahme endet oder abbricht
+
+**Code-Cleanup**
+- Ungenutzten `onModeSelected`-Callback aus `StatusBarController` entfernt
+- `rebuildMenu()` → `refreshModel()` umbenannt und irreführende „Legacy/No-op"-Kommentare entfernt
+- Totes `radius`-Property aus `RecordingHUD` entfernt
+- Tote `.tag(0)/.tag(1)`-Modifier auf `TabView` in `SettingsWindowController` entfernt
+- Leeren `"Übersetzen": []`-Platzhalter aus `legacyPromptsByName` entfernt
+- README-Projektstruktur: doppelter `ModeManager`-Eintrag weg, alle Dateien korrekt gelistet
+
+---
 
 ### v1.3.0 — 2026-04-17
 **Stabiles Code-Signing (kein Keychain-Spam mehr)**

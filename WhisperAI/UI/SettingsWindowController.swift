@@ -8,11 +8,9 @@ private struct SettingsRootView: View {
         TabView {
             GeneralSettingsView()
                 .tabItem { Label("Allgemein", systemImage: "gear") }
-                .tag(0)
 
             ModesSettingsView()
                 .tabItem { Label("Modus", systemImage: "text.bubble") }
-                .tag(1)
         }
         .frame(width: 640, height: 530)
     }

@@ -42,6 +42,7 @@ SOURCES=(
     "${PROJECT_DIR}/WhisperAI/UI/StatusBarController.swift"
     "${PROJECT_DIR}/WhisperAI/UI/SettingsWindowController.swift"
     "${PROJECT_DIR}/WhisperAI/UI/InsertionHUD.swift"
+    "${PROJECT_DIR}/WhisperAI/UI/RecordingHUD.swift"
     "${PROJECT_DIR}/WhisperAI/UI/AccessibilityOnboarding.swift"
     "${PROJECT_DIR}/WhisperAI/Services/TextInserter.swift"
     "${PROJECT_DIR}/WhisperAI/Services/HotkeyManager.swift"

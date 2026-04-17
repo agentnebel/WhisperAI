@@ -8,9 +8,6 @@ class StatusBarController: NSObject {
 
     // MARK: - Callbacks (wired by AppDelegate)
 
-    /// Kept for API compatibility; mode selection is now handled by SwiftUI directly.
-    var onModeSelected: ((Mode) -> Void)?
-
     var onOpenSettings: (() -> Void)? {
         didSet {
             // Wrap: close popover first, then open settings window.
@@ -112,10 +109,11 @@ class StatusBarController: NSObject {
         button.image = NSImage(systemSymbolName: symbolName, accessibilityDescription: "WhisperAI")
     }
 
-    // MARK: - Legacy Compatibility
+    // MARK: - Model Sync
 
-    /// No-op: SwiftUI popover updates reactively; call this to sync the model.
-    func rebuildMenu() {
+    /// Refreshes the popover model after external mode/settings changes
+    /// (z.B. aus dem Settings-Fenster).
+    func refreshModel() {
         WhisperAIModel.shared.refreshModes()
     }
 }
